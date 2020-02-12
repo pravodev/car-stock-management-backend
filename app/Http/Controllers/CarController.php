@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\CarRequest;
+use App\Models\Car;
 
 class CarController extends Controller
 {
@@ -11,19 +13,13 @@ class CarController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('pages.cars');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $cars = new Car;
+        if($name = $request->query('name')){
+            $cars = $cars->where('name', 'like', "%$name");
+        }
+        return response()->json($cars->paginate());
     }
 
     /**
@@ -32,9 +28,13 @@ class CarController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CarRequest $request)
     {
-        //
+        $data = Car::create($request->all());
+        return response()->json([
+            'success' => true,
+            'data' => $data
+        ]);
     }
 
     /**

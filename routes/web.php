@@ -16,7 +16,7 @@ Route::get('/', function(){
 // Route::prefix('auth')->group(function(){
 //     Route::get('login', 'AuthController@viewLogin')->name('auth.login');
 //     Route::post('login', 'AuthController@login');
-//     Route::post('logout', 'AuthController@logout');
+//     Route::post('logout', 'AuthController@lo/gout');
 // });
 
 // Route::middleware('auth')->group(function(){

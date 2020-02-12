@@ -7,6 +7,11 @@ use App\User;
 
 class LoginRequest extends FormRequest
 {
+    public function wantsJson()
+    {
+        return true;
+    }
+    
     /**
      * Determine if the user is authorized to make this request.
      *
