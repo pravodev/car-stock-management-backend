@@ -11,20 +11,28 @@
 |
 */
 
-Route::get('/', function () {
-    $api = \App::make('chat-api');
-    // dd($api);
-    $message = $api->sendPhoneMessage('6289608158049', 'Testing testing');
-    dd($message);
-    return view('welcome');
+Route::prefix('auth')->group(function(){
+    Route::get('login', 'AuthController@viewLogin')->name('auth.login');
+    Route::post('login', 'AuthController@login');
+    Route::post('logout', 'AuthController@logout');
 });
 
-Route::get('/qrcode', function(){
-    return view('qrcode');
-});
+Route::middleware('auth')->group(function(){
+    Route::get('/', function () {
+        return redirect()->to('/dashboard');
+    });
+    
+    Route::get('/dashboard', 'DashboardController');
+    
+    Route::get('/qrcode', function(){
+        return view('qrcode');
+    });
+    
+    Route::get('status', function(){
+        $api = \App::make('chat-api');
+        dd($api->getInbox());
+        dd($api->getStatus());
+    });
 
-Route::get('status', function(){
-    $api = \App::make('chat-api');
-    dd($api->getInbox());
-    dd($api->getStatus());
+    Route::resource('/master-data/cars', 'CarController');
 });
