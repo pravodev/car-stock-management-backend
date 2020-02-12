@@ -10,29 +10,31 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::prefix('auth')->group(function(){
-    Route::get('login', 'AuthController@viewLogin')->name('auth.login');
-    Route::post('login', 'AuthController@login');
-    Route::post('logout', 'AuthController@logout');
+Route::get('/', function(){
+    return view('index');
 });
+// Route::prefix('auth')->group(function(){
+//     Route::get('login', 'AuthController@viewLogin')->name('auth.login');
+//     Route::post('login', 'AuthController@login');
+//     Route::post('logout', 'AuthController@logout');
+// });
 
-Route::middleware('auth')->group(function(){
-    Route::get('/', function () {
-        return redirect()->to('/dashboard');
-    });
+// Route::middleware('auth')->group(function(){
+//     Route::get('/', function () {
+//         return redirect()->to('/dashboard');
+//     });
     
-    Route::get('/dashboard', 'DashboardController');
+//     Route::get('/dashboard', 'DashboardController');
     
-    Route::get('/qrcode', function(){
-        return view('qrcode');
-    });
+//     Route::get('/qrcode', function(){
+//         return view('qrcode');
+//     });
     
-    Route::get('status', function(){
-        $api = \App::make('chat-api');
-        dd($api->getInbox());
-        dd($api->getStatus());
-    });
+//     Route::get('status', function(){
+//         $api = \App::make('chat-api');
+//         dd($api->getInbox());
+//         dd($api->getStatus());
+//     });
 
-    Route::resource('/master-data/cars', 'CarController');
-});
+//     Route::resource('/master-data/cars', 'CarController');
+// });
